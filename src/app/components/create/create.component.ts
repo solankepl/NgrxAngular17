@@ -29,9 +29,10 @@ export class CreateComponent implements OnInit{
   });
 
   public loadLinkTickets = () => {
-    this.store.dispatch(PostsActions.getTickets());
-    const Id= this.postForm.value.selectUser.id;
+   
+    const ticket: Post = this.postForm.value.selectUser;
      console.log("==============",this.postForm.value.selectUser.id);
+     this.store.dispatch(PostsActions.selectPost({selectPost: ticket}));
     //add post to state
     //this.store.dispatch(PostsActions.getLinkTicket(Id));
    
