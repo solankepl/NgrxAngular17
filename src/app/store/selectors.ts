@@ -13,6 +13,16 @@ export const postsSelector = createSelector(
     (state) => state.posts
 );
 
+export const selectPost = createSelector(
+    selectFeature, 
+    (state) => 
+        {       
+            console.log(state,"========ticketsSelector", state.selectPost)
+            return state.selectPost;
+        }
+        
+);
+
 export const errorSelector = createSelector(
     selectFeature, 
     (state) => state.error

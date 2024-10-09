@@ -3,6 +3,7 @@ import { Post } from "./Post.interface";
 export interface PostsStateInterface {
     isLoading : boolean;
     posts : Post[];
+    selectPost: any;
     error : string | null;
 }
 

@@ -10,8 +10,11 @@ export const getPostsFailure = createAction('[Posts] Get Posts Failure', props<{
 export const addPost = createAction('[Posts] Create Post', props<{post: Post}>());
 export const removePost = createAction('[Posts] Remove Post', props<{id: string}>());
 
+export const selectPost =  createAction('[Posts] Selected Post', props<{selectPost: Post}>());
+
+
+
 
 export const getTickets = createAction('[Tickets] Get Tickets');
-
 export const getTicketsSuccess = createAction('[Tickets] Get Tickets Success', props<{tickets: any}>());
 export const getTicketsFailure = createAction('[Tickets] Get Tickets Failure', props<{error: string}>());

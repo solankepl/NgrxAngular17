@@ -8,6 +8,7 @@ import { createReducer, on } from "@ngrx/store"
 export const initialState: PostsStateInterface = {
     isLoading: false,
     posts: [],
+    selectPost:null,
     error: null
 }
 
@@ -26,7 +27,7 @@ export const reducers = createReducer(
     on(PostsActions.getPostsSuccess, (state, action) => ({...state, isLoading: false, posts: action.posts})),
     on(PostsActions.getPostsFailure, (state, action) => ({...state, isLoading: false, error: action.error})),
     on(PostsActions.addPost, (state, action) => ({...state, isLoading: false, posts: [...state.posts, action.post]})),
-
+    on(PostsActions.selectPost, (state, action) => ({...state, isLoading: false, selectPost: action.selectPost})),
 );
 
 

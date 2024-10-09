@@ -20,7 +20,15 @@ export class PostsEffects {
                 {
                    id: '1',
                    value: "guest 1"
-                }
+                },
+                {
+                    id: '2',
+                    value: "guest 2"
+                 },
+                 {
+                    id: '3',
+                    value: "guest 3"
+                 }
             ]); //service
             return posts$.pipe(map((posts) => {
                 return PostsActions.getPostsSuccess({posts});

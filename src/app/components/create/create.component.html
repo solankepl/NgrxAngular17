@@ -2,9 +2,9 @@
     <div class="formcontrol">
         <label for="title">Title</label>
         <!-- <input type="text" formControlName="selectGuest" name="selectGuest"/> -->
-       <select class="form-control" name="selectGuest" formControlName="selectGuest" (change)="loadLinkTickets()">
+       <select class="form-control" name="selectUser" formControlName="selectUser" (change)="loadLinkTickets()">
             <option value="" disabled>Choose a guest</option>
-            <option *ngFor="let guest of guests" [ngValue]="guest">{{ guest.value }}</option>
+            <option *ngFor="let user of userData" [ngValue]="user">{{ user.value }}</option>
         </select>   
        
     </div>

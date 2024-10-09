@@ -2,13 +2,13 @@ import * as PostsActions from "../../store/actions";
 
 import { Component, OnInit, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Store, select } from '@ngrx/store';
+import { postsSelector, selectPost, ticketsSelector } from '../../store/selectors';
 
 import { AppStateInterface } from '../../types/appState.interface';
 import { CommonModule } from '@angular/common';
 import { Observable } from "rxjs";
 import { Post } from '../../interfaces/Post.interface';
-import { ticketsSelector } from '../../store/selectors';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-create',
@@ -19,31 +19,19 @@ import { ticketsSelector } from '../../store/selectors';
 })
 export class CreateComponent implements OnInit{
 
-  guests =[{
-    id:"1",
-    value:"Guest 1"
-  },
-  {
-    id:"2",
-    value:"Guest 2"
-  },
-  {
-    id:"3",
-    value:"Guest 3"
-  }
+  userData:any[] = [];
 
-]
   private readonly store:Store<AppStateInterface> = inject(Store);
 
 
   public postForm = new FormGroup({
-    selectGuest: new FormControl<any | null>("", {validators:[Validators.required], nonNullable: true})
+    selectUser: new FormControl<any | null>("", {validators:[Validators.required], nonNullable: true})
   });
 
   public loadLinkTickets = () => {
     this.store.dispatch(PostsActions.getTickets());
-    const Id= this.postForm.value.selectGuest.id;
-     console.log("==============",this.postForm.value.selectGuest.id);
+    const Id= this.postForm.value.selectUser.id;
+     console.log("==============",this.postForm.value.selectUser.id);
     //add post to state
     //this.store.dispatch(PostsActions.getLinkTicket(Id));
    
@@ -54,29 +42,45 @@ export class CreateComponent implements OnInit{
 
 
   public addPost = () => {
-    const _post: Post = this.postForm.value.selectGuest;
-     console.log("==============",this.postForm.value.selectGuest);
+    const _post: Post = this.postForm.value.selectUser;
+     console.log("==============",this.postForm.value.selectUser);
     //add post to state
-    this.store.dispatch(PostsActions.addPost({post: _post}));
+    this.store.dispatch(PostsActions.selectPost({selectPost: _post}));
    
     //reset
     //this.postForm.reset();
 
   }
 
-    
+  readonly users$: Observable<any> = this.store.select(postsSelector);
+
+  readonly selectOption$: Observable<any> = this.store.select(selectPost);
     //get link tickets list
     linkTicktsData$: Observable<any> = this.store.select(ticketsSelector);
       //return the isloading slice of the state
   //readonly isLoading$: Observable<any> = this.store.select(isLoadingTicketsSelector);
   //error
   //readonly error$: Observable<any> = this.store.select(errorTicketsSelector);
+
+  
+  //fetch store data
+  public fetchStoreData(){
+    //this also triggers the effects
+    this.store.dispatch(PostsActions.getPosts());  
+  }
   ngOnInit(): void {      
    
     //this.isLoading$.subscribe();
     //this.error$.subscribe();
-    this.linkTicktsData$.subscribe((val) =>{
-      console.log("linkTicktsData---",val);
+    this.fetchStoreData();
+
+    this.users$.subscribe((val) =>{
+      console.log("userData---",val);
+      this.userData = val;
+    });
+    
+    this.selectOption$.subscribe((val) =>{
+      console.log("selectOption$---",val);
     });
     this.store.subscribe(state => console.log({ state }));
   }
