@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterOutlet } from '@angular/router';
-import { PostsComponent } from './components/posts/posts.component';
+import { Component } from '@angular/core';
 import { CreateComponent } from './components/create/create.component';
+import { PostsComponent } from './components/posts/posts.component';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -12,5 +12,5 @@ import { CreateComponent } from './components/create/create.component';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'angngrx';
+  title = 'angaulr Ngrx';
 }

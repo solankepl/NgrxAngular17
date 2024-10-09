@@ -1,9 +1,11 @@
-import { Injectable, inject } from "@angular/core";
-import { Actions, createEffect, ofType } from "@ngrx/effects";
 import * as PostsActions from "./actions";
-import { mergeMap, of, Observable, catchError } from "rxjs";
-import {map} from "rxjs/operators";
+
+import { Actions, createEffect, ofType } from "@ngrx/effects";
+import { Injectable, inject } from "@angular/core";
+import { Observable, catchError, mergeMap, of } from "rxjs";
+
 import { Post } from "../interfaces/Post.interface";
+import {map} from "rxjs/operators";
 
 @Injectable()
 export class PostsEffects {
@@ -28,5 +30,23 @@ export class PostsEffects {
         }))
     })
 
-   
+    
+    getTickts$ = createEffect(() => {
+        return this.actions$.pipe(ofType(PostsActions.getTickets), 
+        mergeMap(() => {
+            //posts$ might represent a call to a service that returns an observable -- similar to a response from an API
+            const tickets$: Observable<any> = of({
+                    1:["this is link ticket one"],
+                    2:["this is link ticket 2"],
+                    3:[]            
+                }
+            ); 
+            //service
+            return tickets$.pipe(map((tickets) => {
+                return PostsActions.getTicketsSuccess(tickets);
+            }),
+            catchError((error) => of(PostsActions.getTicketsFailure({error: error.message})))
+            )//endof pipe
+        }))
+    })
 }

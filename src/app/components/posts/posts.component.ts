@@ -1,14 +1,13 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import * as PostsActions from "../../store/actions";
 
-//store
-import { Store, select } from '@ngrx/store';
-import { Observable } from 'rxjs';
-import { Post } from '../../interfaces/Post.interface';
-import { isLoadingSelector, postsSelector, errorSelector } from '../../store/selectors';
-import { AppStateInterface } from '../../types/appState.interface';
+import { Component, OnInit, inject } from '@angular/core';
+import { errorSelector, isLoadingSelector, postsSelector } from '../../store/selectors';
 
+import { AppStateInterface } from '../../types/appState.interface';
+import { CommonModule } from '@angular/common';
+import { Observable } from 'rxjs';
+//store
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-posts',
@@ -30,12 +29,14 @@ export class PostsComponent implements OnInit {
   //fetch store data
   public fetchStoreData(){
     //this also triggers the effects
-    this.store.dispatch(PostsActions.getPosts());
+    this.store.dispatch(PostsActions.getPosts());  
   }
 
+    
 
   ngOnInit(): void {
     this.fetchStoreData();
+   
   }
 
 }

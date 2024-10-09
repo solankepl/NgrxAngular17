@@ -1,12 +1,14 @@
-import { Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
-import { Post } from '../../interfaces/Post.interface';
-import { isLoadingSelector, postsSelector, errorSelector } from '../../store/selectors';
-import { AppStateInterface } from '../../types/appState.interface';
-import { Store, select } from '@ngrx/store';
 import * as PostsActions from "../../store/actions";
 
+import { Component, OnInit, inject } from '@angular/core';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Store, select } from '@ngrx/store';
+
+import { AppStateInterface } from '../../types/appState.interface';
+import { CommonModule } from '@angular/common';
+import { Observable } from "rxjs";
+import { Post } from '../../interfaces/Post.interface';
+import { ticketsSelector } from '../../store/selectors';
 
 @Component({
   selector: 'app-create',
@@ -15,7 +17,7 @@ import * as PostsActions from "../../store/actions";
   templateUrl: './create.component.html',
   styleUrl: './create.component.css'
 })
-export class CreateComponent {
+export class CreateComponent implements OnInit{
 
   guests =[{
     id:"1",
@@ -38,10 +40,20 @@ export class CreateComponent {
     selectGuest: new FormControl<any | null>("", {validators:[Validators.required], nonNullable: true})
   });
 
+  public loadLinkTickets = () => {
+    this.store.dispatch(PostsActions.getTickets());
+    const Id= this.postForm.value.selectGuest.id;
+     console.log("==============",this.postForm.value.selectGuest.id);
+    //add post to state
+    //this.store.dispatch(PostsActions.getLinkTicket(Id));
+   
+    //reset
+    //this.postForm.reset();
+
+  }
+
 
   public addPost = () => {
-    //const {title} = this.postForm.value;
-
     const _post: Post = this.postForm.value.selectGuest;
      console.log("==============",this.postForm.value.selectGuest);
     //add post to state
@@ -50,6 +62,23 @@ export class CreateComponent {
     //reset
     //this.postForm.reset();
 
+  }
+
+    
+    //get link tickets list
+    linkTicktsData$: Observable<any> = this.store.select(ticketsSelector);
+      //return the isloading slice of the state
+  //readonly isLoading$: Observable<any> = this.store.select(isLoadingTicketsSelector);
+  //error
+  //readonly error$: Observable<any> = this.store.select(errorTicketsSelector);
+  ngOnInit(): void {      
+   
+    //this.isLoading$.subscribe();
+    //this.error$.subscribe();
+    this.linkTicktsData$.subscribe((val) =>{
+      console.log("linkTicktsData---",val);
+    });
+    this.store.subscribe(state => console.log({ state }));
   }
 
 }

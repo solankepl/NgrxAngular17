@@ -2,7 +2,7 @@
     <div class="formcontrol">
         <label for="title">Title</label>
         <!-- <input type="text" formControlName="selectGuest" name="selectGuest"/> -->
-       <select class="form-control" name="selectGuest" formControlName="selectGuest">
+       <select class="form-control" name="selectGuest" formControlName="selectGuest" (change)="loadLinkTickets()">
             <option value="" disabled>Choose a guest</option>
             <option *ngFor="let guest of guests" [ngValue]="guest">{{ guest.value }}</option>
         </select>   
@@ -11,3 +11,6 @@
 
    <input type="submit" [disabled]="!postForm.valid" value="Submit">
 </form>
+
+
+

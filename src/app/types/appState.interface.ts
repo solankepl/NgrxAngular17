@@ -1,5 +1,6 @@
-import { PostsStateInterface } from "../interfaces/postsState.interface";
+import { LinkTicketStateInterface, PostsStateInterface } from "../interfaces/postsState.interface";
 
 export interface AppStateInterface {
     posts: PostsStateInterface;
+    tickets: LinkTicketStateInterface;
 }
